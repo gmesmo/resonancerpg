@@ -21,39 +21,134 @@ function App() {
         nome: "Atletismo",
         treinada: false,
         mod: "strength",
-        bonus: 0, // Bônus da perícia
+        bonus: 0,
       },
       {
         nome: "Adestrar Animais",
         treinada: false,
         mod: "wisdom",
-        bonus: 0, // Bônus da perícia
+        bonus: 0,
       },
       {
         nome: "Acrobacia",
         treinada: false,
         mod: "dexterity",
-        bonus: 0, // Bônus da perícia
+        bonus: 0,
       },
       {
         nome: "Atuação",
         treinada: false,
         mod: "charisma",
-        bonus: 0, // Bônus da perícia
+        bonus: 0,
       },
       {
         nome: "Conhecimento",
         treinada: false,
         mod: "intelligence",
-        bonus: 0, // Bônus da perícia
+        bonus: 0,
       },
       {
         nome: "Diplomacia",
         treinada: false,
         mod: "charisma",
-        bonus: 0, // Bônus da perícia
+        bonus: 0,
       },
-      // Adicione outras habilidades aqui...
+      {
+        nome: "Dissimulação",
+        treinada: false,
+        mod: "charisma",
+        bonus: 0,
+      },
+      {
+        nome: "Furtividade",
+        treinada: false,
+        mod: "dexterity",
+        bonus: 0,
+      },
+      {
+        nome: "Identificar Poder",
+        treinada: false,
+        mod: "intelligence",
+        bonus: 0,
+      },
+      {
+        nome: "Iniciativa",
+        treinada: false,
+        mod: "dexterity",
+        bonus: 0,
+      },
+      {
+        nome: "Intimidação",
+        treinada: false,
+        mod: "charisma",
+        bonus: 0,
+      },
+      {
+        nome: "Intuição",
+        treinada: false,
+        mod: "wisdom",
+        bonus: 0,
+      },
+      {
+        nome: "Pilotagem",
+        treinada: false,
+        mod: "dexterity",
+        bonus: 0,
+      },
+      {
+        nome: "Ladinagem",
+        treinada: false,
+        mod: "dexterity",
+        bonus: 0,
+      },
+      {
+        nome: "Meditação",
+        treinada: false,
+        mod: "wisdom",
+        bonus: 0,
+      },
+      {
+        nome: "Ofício",
+        treinada: false,
+        mod: "intelligence",
+        bonus: 0,
+      },
+      {
+        nome: "Percepção",
+        treinada: false,
+        mod: "wisdom",
+        bonus: 0,
+      },
+      {
+        nome: "Sobrevivência",
+        treinada: false,
+        mod: "wisdom",
+        bonus: 0,
+      },
+      {
+        nome: "Medicina",
+        treinada: false,
+        mod: "intelligence",
+        bonus: 0,
+      },
+      {
+        nome: "Tecnologia",
+        treinada: false,
+        mod: "intelligence",
+        bonus: 0,
+      },
+      {
+        nome: "Investigação",
+        treinada: false,
+        mod: "intelligence",
+        bonus: 0,
+      },
+      {
+        nome: "Religião",
+        treinada: false,
+        mod: "wisdom",
+        bonus: 0,
+      },
     ],
   };
 
@@ -72,6 +167,7 @@ function App() {
 
   const handleAbilityChange = (e) => {
     const { name, value } = e.target;
+    console.log(`Habilidade ${name} alterada para ${value}`);
     setCharacter({
       ...character,
       abilities: {
@@ -81,23 +177,26 @@ function App() {
     });
   };
 
+  const resetCharacter = () => {
+    setCharacter(defaultCharacter);
+    localStorage.removeItem("character");
+  };
+
   const handleSkillChange = (skillNome, checked) => {
+    // const levelBonus = calculateLevelBonus(character.level);
+
     const updatedSkills = character.skills.map((skill) => {
       if (skill.nome === skillNome) {
-        const { mod } = skill;
-        let bonus = 0;
-
-        // Calcule o bônus com base na habilidade
-        const ability = character.abilities[mod];
-        const abilityModifier = Math.floor((ability - 10) / 2);
-        bonus += abilityModifier;
-
-        // Adicione o bônus de treinado se a perícia for treinada
-        if (checked) {
-          bonus += 2;
-        }
-
-        return { ...skill, treinada: checked, bonus };
+        const trainedBonus = checked ? 2 : 0;
+        const abilityModifier = Math.floor(
+          (character.abilities[skill.mod] - 10) / 2
+        );
+        const totalBonus = abilityModifier + trainedBonus;
+        return {
+          ...skill,
+          treinada: checked,
+          bonus: totalBonus,
+        };
       }
       return skill;
     });
@@ -108,38 +207,43 @@ function App() {
     });
   };
 
-  const rollSkill = (skill) => {
-    // Simule um lançamento de dado de 20 lados
-    const rollResult = Math.floor(Math.random() * 20) + 1;
+  // const rollSkill = (skill) => {
+  //   const rollResult = Math.floor(Math.random() * 20) + 1;
+  //   alert(
+  //     `Resultado da rolagem para ${skill.nome}: ${rollResult + skill.bonus}`
+  //   );
+  // };
 
-    // Calcule o resultado final
-    const totalResult = rollResult + skill.bonus;
-
-    // Exiba o resultado para o usuário
-    alert(`Resultado da rolagem para ${skill.nome}: ${totalResult}`);
-  };
-
-  const resetCharacter = () => {
-    setCharacter(defaultCharacter);
-    localStorage.removeItem("character");
-  };
+  // const calculateLevelBonus = (level) => {
+  //   if (level >= 6 && level <= 10) {
+  //     return 1;
+  //   } else if (level >= 11 && level <= 15) {
+  //     return 2;
+  //   } else if (level >= 16 && level <= 20) {
+  //     return 3;
+  //   }
+  //   return 0;
+  // };
 
   return (
     <div className="App">
-      <h1>Ficha de Personagem de RPG</h1>
-      <CharacterHeader
-        character={character}
-        handleChange={handleChange}
-        handleAbilityChange={handleAbilityChange}
-      />
-      <Skills
-        skills={character.skills}
-        handleSkillChange={handleSkillChange}
-        rollSkill={rollSkill}
-      />
-      <button onClick={resetCharacter}>
-        Restaurar Padrão e Limpar LocalStorage
-      </button>
+      <section>
+        <h1>Ficha de Personagem de RPG</h1>
+        <CharacterHeader
+          character={character}
+          handleChange={handleChange}
+          handleAbilityChange={handleAbilityChange}
+        />
+        <Skills skills={character.skills} onClick={handleSkillChange} />
+        {/* <Skills
+          skills={character.skills}
+          handleSkillChange={handleSkillChange}
+          rollSkill={rollSkill}
+        /> */}
+        <button onClick={resetCharacter}>
+          Restaurar Padrão e Limpar LocalStorage
+        </button>
+      </section>
     </div>
   );
 }

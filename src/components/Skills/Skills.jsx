@@ -1,19 +1,22 @@
 import React from "react";
 
-function Skills({ skills, handleSkillChange, rollSkill }) {
+import styles from "./Skills.module.css";
+
+function Skills(props) {
+  const skills = props.skills;
+
   return (
-    <div className="character-skills">
+    <div className={styles.characterSkills}>
       <h2>Perícias</h2>
       {skills.map((skill, index) => (
-        <div key={index} className="skill-item">
+        <div key={index} className={styles.skill}>
           <label>
-            {skill.nome}:<input disabled value={skill.bonus}></input>
+            {skill.nome}
             <input
               type="checkbox"
               checked={skill.treinada}
-              onChange={(e) => handleSkillChange(skill.nome, e.target.checked)}
-            />
-            <button onClick={() => rollSkill(skill)}>Rolar Perícia</button>
+              onChange={(e) => props.onClick(skill.nome, e.target.checked)}
+            ></input>
           </label>
         </div>
       ))}
@@ -22,3 +25,21 @@ function Skills({ skills, handleSkillChange, rollSkill }) {
 }
 
 export default Skills;
+
+// <div className="character-skills">
+//   <h2>Perícias</h2>
+//   {skills.map((skill, index) => (
+//     <div key={index} className="skill-item">
+//       <label>
+//         {skill.nome}:
+//         <input
+//           type="checkbox"
+//           checked={skill.treinada}
+//           onChange={(e) => handleSkillChange(skill.nome, e.target.checked)}
+//         />
+//       </label>
+//       <span>Bônus: {skill.bonus}</span>
+//       <button onClick={() => rollSkill(skill)}>Rolar Perícia</button>
+//     </div>
+//   ))}
+// </div>

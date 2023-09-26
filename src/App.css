@@ -3,6 +3,14 @@
   font-family: Arial, sans-serif;
 }
 
+section {
+  width: 25dvw;
+  height: calc(100dvh);
+  background-color: lightgray;
+
+  border-right: solid 2px gray;
+}
+
 .character-header {
   margin-bottom: 20px;
 }
