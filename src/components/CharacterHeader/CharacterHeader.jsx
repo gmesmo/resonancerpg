@@ -1,29 +1,38 @@
 import React from "react";
 
+import styles from "./CharacterHeader.module.css";
+
 function CharacterHeader({ character, handleChange, handleAbilityChange }) {
   return (
-    <div className="character-header">
-      <label>Nome do Personagem:</label>
-      <input
-        type="text"
-        name="name"
-        value={character.name}
-        onChange={handleChange}
-      />
-      <label>Geração:</label>
-      <input
-        type="number"
-        name="generation"
-        value={character.generation}
-        onChange={handleChange}
-      />
-      <label>Nível:</label>
-      <input
-        type="number"
-        name="level"
-        value={character.level}
-        onChange={handleChange}
-      />
+    <div className={styles.characterHeader}>
+      <div className={styles.info}>
+        <label>Nome do Personagem:</label>
+        <input
+          type="text"
+          name="name"
+          value={character.name}
+          onChange={handleChange}
+        />
+      </div>
+      <div className={styles.info}>
+        <label>Geração:</label>
+        <input
+          type="number"
+          name="generation"
+          value={character.generation}
+          onChange={handleChange}
+        />
+      </div>
+      <div className={styles.info}>
+        <label>Nível:</label>
+        <input
+          type="number"
+          name="level"
+          value={character.level}
+          onChange={handleChange}
+        />
+      </div>
+
       <div className="character-abilities">
         <h2>Habilidades</h2>
         <label>Força:</label>

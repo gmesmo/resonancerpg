@@ -11,13 +11,14 @@ function Skills(props) {
       {skills.map((skill, index) => (
         <div key={index} className={styles.skill}>
           <label>
-            {skill.nome}
+            {skill.name}
             <input
               type="checkbox"
               checked={skill.treinada}
-              onChange={(e) => props.onClick(skill.nome, e.target.checked)}
+              onChange={(e) => props.onClick(skill.name, e.target.checked)}
             ></input>
           </label>
+          Bônus: {skill.bonus}
         </div>
       ))}
     </div>
@@ -31,11 +32,11 @@ export default Skills;
 //   {skills.map((skill, index) => (
 //     <div key={index} className="skill-item">
 //       <label>
-//         {skill.nome}:
+//         {skill.name}:
 //         <input
 //           type="checkbox"
 //           checked={skill.treinada}
-//           onChange={(e) => handleSkillChange(skill.nome, e.target.checked)}
+//           onChange={(e) => handleSkillChange(skill.name, e.target.checked)}
 //         />
 //       </label>
 //       <span>Bônus: {skill.bonus}</span>

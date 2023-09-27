@@ -18,133 +18,133 @@ function App() {
     },
     skills: [
       {
-        nome: "Atletismo",
+        name: "Atletismo",
         treinada: false,
         mod: "strength",
         bonus: 0,
       },
       {
-        nome: "Adestrar Animais",
+        name: "Adestrar Animais",
         treinada: false,
         mod: "wisdom",
         bonus: 0,
       },
       {
-        nome: "Acrobacia",
+        name: "Acrobacia",
         treinada: false,
         mod: "dexterity",
         bonus: 0,
       },
       {
-        nome: "Atuação",
+        name: "Atuação",
         treinada: false,
         mod: "charisma",
         bonus: 0,
       },
       {
-        nome: "Conhecimento",
+        name: "Conhecimento",
         treinada: false,
         mod: "intelligence",
         bonus: 0,
       },
       {
-        nome: "Diplomacia",
+        name: "Diplomacia",
         treinada: false,
         mod: "charisma",
         bonus: 0,
       },
       {
-        nome: "Dissimulação",
+        name: "Dissimulação",
         treinada: false,
         mod: "charisma",
         bonus: 0,
       },
       {
-        nome: "Furtividade",
+        name: "Furtividade",
         treinada: false,
         mod: "dexterity",
         bonus: 0,
       },
       {
-        nome: "Identificar Poder",
+        name: "Identificar Poder",
         treinada: false,
         mod: "intelligence",
         bonus: 0,
       },
       {
-        nome: "Iniciativa",
+        name: "Iniciativa",
         treinada: false,
         mod: "dexterity",
         bonus: 0,
       },
       {
-        nome: "Intimidação",
+        name: "Intimidação",
         treinada: false,
         mod: "charisma",
         bonus: 0,
       },
       {
-        nome: "Intuição",
+        name: "Intuição",
         treinada: false,
         mod: "wisdom",
         bonus: 0,
       },
       {
-        nome: "Pilotagem",
+        name: "Pilotagem",
         treinada: false,
         mod: "dexterity",
         bonus: 0,
       },
       {
-        nome: "Ladinagem",
+        name: "Ladinagem",
         treinada: false,
         mod: "dexterity",
         bonus: 0,
       },
       {
-        nome: "Meditação",
+        name: "Meditação",
         treinada: false,
         mod: "wisdom",
         bonus: 0,
       },
       {
-        nome: "Ofício",
+        name: "Ofício",
         treinada: false,
         mod: "intelligence",
         bonus: 0,
       },
       {
-        nome: "Percepção",
+        name: "Percepção",
         treinada: false,
         mod: "wisdom",
         bonus: 0,
       },
       {
-        nome: "Sobrevivência",
+        name: "Sobrevivência",
         treinada: false,
         mod: "wisdom",
         bonus: 0,
       },
       {
-        nome: "Medicina",
+        name: "Medicina",
         treinada: false,
         mod: "intelligence",
         bonus: 0,
       },
       {
-        nome: "Tecnologia",
+        name: "Tecnologia",
         treinada: false,
         mod: "intelligence",
         bonus: 0,
       },
       {
-        nome: "Investigação",
+        name: "Investigação",
         treinada: false,
         mod: "intelligence",
         bonus: 0,
       },
       {
-        nome: "Religião",
+        name: "Religião",
         treinada: false,
         mod: "wisdom",
         bonus: 0,
@@ -168,13 +168,17 @@ function App() {
   const handleAbilityChange = (e) => {
     const { name, value } = e.target;
     console.log(`Habilidade ${name} alterada para ${value}`);
-    setCharacter({
-      ...character,
-      abilities: {
-        ...character.abilities,
-        [name]: parseInt(value),
-      },
-    });
+
+    // Processo alternativo para garantir renderização
+    const updatedCharacter = { ...character };
+    updatedCharacter.abilities[name] = parseInt(value);
+    setCharacter(updatedCharacter);
+
+    character.skills
+      .filter((skill) => skill.mod === name)
+      .forEach((filteredSkills) =>
+        handleSkillChange(filteredSkills.name, filteredSkills.checked)
+      );
   };
 
   const resetCharacter = () => {
@@ -182,11 +186,11 @@ function App() {
     localStorage.removeItem("character");
   };
 
-  const handleSkillChange = (skillNome, checked) => {
+  const handleSkillChange = (skillName, checked) => {
     // const levelBonus = calculateLevelBonus(character.level);
 
     const updatedSkills = character.skills.map((skill) => {
-      if (skill.nome === skillNome) {
+      if (skill.name === skillName) {
         const trainedBonus = checked ? 2 : 0;
         const abilityModifier = Math.floor(
           (character.abilities[skill.mod] - 10) / 2
@@ -201,16 +205,16 @@ function App() {
       return skill;
     });
 
-    setCharacter({
-      ...character,
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
       skills: updatedSkills,
-    });
+    }));
   };
 
   // const rollSkill = (skill) => {
   //   const rollResult = Math.floor(Math.random() * 20) + 1;
   //   alert(
-  //     `Resultado da rolagem para ${skill.nome}: ${rollResult + skill.bonus}`
+  //     `Resultado da rolagem para ${skill.name}: ${rollResult + skill.bonus}`
   //   );
   // };
 
@@ -225,9 +229,11 @@ function App() {
   //   return 0;
   // };
 
+  const handleSkill = (name, checked) => {};
+
   return (
     <div className="App">
-      <section>
+      <section id={"sheetHeader"}>
         <h1>Ficha de Personagem de RPG</h1>
         <CharacterHeader
           character={character}
