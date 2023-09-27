@@ -8,6 +8,7 @@ function App() {
     name: "",
     generation: 0,
     level: 1,
+    levelModifier: 2,
     abilities: {
       strength: 10,
       dexterity: 10,
@@ -161,24 +162,21 @@ function App() {
   }, [character]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCharacter({ ...character, [name]: value });
-  };
+    let { name, value } = e.target;
 
-  const handleAbilityChange = (e) => {
-    const { name, value } = e.target;
-    console.log(`Habilidade ${name} alterada para ${value}`);
-
-    // Processo alternativo para garantir renderização
-    const updatedCharacter = { ...character };
-    updatedCharacter.abilities[name] = parseInt(value);
-    setCharacter(updatedCharacter);
-
-    character.skills
-      .filter((skill) => skill.mod === name)
-      .forEach((filteredSkills) =>
-        handleSkillChange(filteredSkills.name, filteredSkills.checked)
+    if (name === "generation") {
+      value = Math.max(0, Math.min(4, Number(e.target.value)));
+    } else if (name === "level") {
+      value = Math.max(1, Math.min(20, Number(e.target.value)));
+      character.skills.map((skill) =>
+        handleSkillChange(skill.name, skill.checked)
       );
+    }
+    setCharacter({ ...character, [name]: value });
+
+    // if (name === "level") {
+    //   calculateLevelBonus
+    // }
   };
 
   const resetCharacter = () => {
@@ -186,29 +184,55 @@ function App() {
     localStorage.removeItem("character");
   };
 
+  // Função para lidar com a mudança nas habilidades
+  const handleAbilityChange = (e) => {
+    // Obtém o nome e o valor da habilidade alterada
+    const { name, value } = e.target;
+    // Cria uma cópia do personagem para atualizações
+    const updatedCharacter = { ...character };
+    // Converte o valor para um número inteiro e atualiza a habilidade
+    updatedCharacter.abilities[name] = parseInt(value);
+    // Atualiza o estado das habilidades
+    setCharacter(updatedCharacter);
+    if (value % 2 == 0) {
+      character.skills
+        .filter((skill) => skill.mod === name)
+        .forEach((filteredSkill) => {
+          handleSkillChange(filteredSkill.name, filteredSkill.checked);
+          console.log(`${filteredSkill.name} alterado`);
+        });
+    }
+    // Filtra as habilidades relacionadas à habilidade modificada e chama handleSkillChange para cada uma
+  };
+
+  // Função para lidar com a mudança nas skills
   const handleSkillChange = (skillName, checked) => {
-    // const levelBonus = calculateLevelBonus(character.level);
+    // Atualiza o estado das skills com base na habilidade modificada
+    setCharacter((prevCharacter) => {
+      const updatedSkills = prevCharacter.skills.map((skill) => {
+        if (skill.name === skillName) {
+          // Calcula o bônus com base na habilidade e na perícia treinada
+          const trainedBonus = checked ? 2 + character.levelModifier : 0;
+          const abilityModifier = Math.floor(
+            (prevCharacter.abilities[skill.mod] - 10) / 2
+          );
+          const totalBonus = abilityModifier + trainedBonus;
+          // Retorna a skill atualizada
+          return {
+            ...skill,
+            treinada: checked,
+            bonus: totalBonus,
+          };
+        }
+        return skill;
+      });
 
-    const updatedSkills = character.skills.map((skill) => {
-      if (skill.name === skillName) {
-        const trainedBonus = checked ? 2 : 0;
-        const abilityModifier = Math.floor(
-          (character.abilities[skill.mod] - 10) / 2
-        );
-        const totalBonus = abilityModifier + trainedBonus;
-        return {
-          ...skill,
-          treinada: checked,
-          bonus: totalBonus,
-        };
-      }
-      return skill;
+      // Retorna o personagem com as skills atualizadas
+      return {
+        ...prevCharacter,
+        skills: updatedSkills,
+      };
     });
-
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      skills: updatedSkills,
-    }));
   };
 
   // const rollSkill = (skill) => {
@@ -218,18 +242,16 @@ function App() {
   //   );
   // };
 
-  // const calculateLevelBonus = (level) => {
-  //   if (level >= 6 && level <= 10) {
-  //     return 1;
-  //   } else if (level >= 11 && level <= 15) {
-  //     return 2;
-  //   } else if (level >= 16 && level <= 20) {
-  //     return 3;
-  //   }
-  //   return 0;
-  // };
-
-  const handleSkill = (name, checked) => {};
+  const calculateLevelBonus = (level) => {
+    if (level >= 6 && level <= 10) {
+      return 3;
+    } else if (level >= 11 && level <= 15) {
+      return 4;
+    } else if (level >= 16 && level <= 20) {
+      return 5;
+    }
+    return 2;
+  };
 
   return (
     <div className="App">

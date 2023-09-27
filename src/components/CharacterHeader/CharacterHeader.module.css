@@ -1,7 +1,10 @@
 .characterHeader {
-  width: 95%;
+  width: calc(95% - 2rem);
+
+  padding: 1rem;
 
   border: solid 1px gray;
+  border-radius: 10px;
 
   display: inherit;
   flex-direction: column;
@@ -17,7 +20,7 @@
 }
 
 .info input {
-  max-width: 60%;
+  max-width: 40%;
   text-align: center;
 }
 
