@@ -1,7 +1,22 @@
 .characterSkills {
-  background-color: antiquewhite;
+  width: calc(95% - 2rem);
+
+  padding: 1rem;
+  margin-top: 1rem;
+
+  border: 1px solid gray;
+  border-radius: 10px;
 }
 
-.skill {
-  background-color: aqua;
+.characterSkills h2 {
+  margin: 0.2rem;
+}
+
+.characterSkills table {
+  width: 100%;
+}
+
+.characterSkills .skillName {
+  text-align: justify;
+  text-indent: 0.5rem;
 }
