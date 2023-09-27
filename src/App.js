@@ -168,8 +168,7 @@ function App() {
       value = Math.max(0, Math.min(4, Number(e.target.value)));
     } else if (name === "level") {
       value = Math.max(1, Math.min(20, Number(e.target.value)));
-      calculateLevelBonus(value);
-      console.log(character.levelModifier);
+
       character.skills.map((skill) =>
         handleSkillChange(skill.name, skill.checked)
       );
@@ -196,7 +195,7 @@ function App() {
     updatedCharacter.abilities[name] = parseInt(value);
     // Atualiza o estado das habilidades
     setCharacter(updatedCharacter);
-    if (value % 2 == 0) {
+    if (value % 2 === 0) {
       character.skills
         .filter((skill) => skill.mod === name)
         .forEach((filteredSkill) => {
@@ -254,12 +253,18 @@ function App() {
     } else if (level >= 16 && level <= 20) {
       levelBonus = 5;
     }
-    const updatedCharacter = { ...character };
-    // Converte o valor para um número inteiro e atualiza a habilidade
-    updatedCharacter.levelModifier = levelBonus;
-    // Atualiza o estado das habilidades
-    setCharacter(updatedCharacter);
+
+    setCharacter((prevCharacter) => {
+      return {
+        ...prevCharacter,
+        levelModifier: levelBonus,
+      };
+    });
   };
+
+  useEffect(() => {
+    calculateLevelBonus(character.level);
+  }, [character.level]);
 
   return (
     <div className="App">
