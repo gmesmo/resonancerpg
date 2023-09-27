@@ -161,88 +161,6 @@ function App() {
     localStorage.setItem("character", JSON.stringify(character));
   }, [character]);
 
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-
-    if (name === "generation") {
-      value = Math.max(0, Math.min(4, Number(e.target.value)));
-    } else if (name === "level") {
-      value = Math.max(1, Math.min(20, Number(e.target.value)));
-
-      character.skills.map((skill) =>
-        handleSkillChange(skill.name, skill.checked)
-      );
-    }
-    setCharacter({ ...character, [name]: value });
-
-    // if (name === "level") {
-    //   calculateLevelBonus
-    // }
-  };
-
-  const resetCharacter = () => {
-    setCharacter(defaultCharacter);
-    localStorage.removeItem("character");
-  };
-
-  // Função para lidar com a mudança nas habilidades
-  const handleAbilityChange = (e) => {
-    // Obtém o nome e o valor da habilidade alterada
-    const { name, value } = e.target;
-    // Cria uma cópia do personagem para atualizações
-    const updatedCharacter = { ...character };
-    // Converte o valor para um número inteiro e atualiza a habilidade
-    updatedCharacter.abilities[name] = parseInt(value);
-    // Atualiza o estado das habilidades
-    setCharacter(updatedCharacter);
-    if (value % 2 === 0) {
-      character.skills
-        .filter((skill) => skill.mod === name)
-        .forEach((filteredSkill) => {
-          handleSkillChange(filteredSkill.name, filteredSkill.checked);
-          console.log(`${filteredSkill.name} alterado`);
-        });
-    }
-    // Filtra as habilidades relacionadas à habilidade modificada e chama handleSkillChange para cada uma
-  };
-
-  // Função para lidar com a mudança nas skills
-  const handleSkillChange = (skillName, checked) => {
-    // Atualiza o estado das skills com base na habilidade modificada
-    setCharacter((prevCharacter) => {
-      const updatedSkills = prevCharacter.skills.map((skill) => {
-        if (skill.name === skillName) {
-          // Calcula o bônus com base na habilidade e na perícia treinada
-          const trainedBonus = checked ? 2 + character.levelModifier : 0;
-          const abilityModifier = Math.floor(
-            (prevCharacter.abilities[skill.mod] - 10) / 2
-          );
-          const totalBonus = abilityModifier + trainedBonus;
-          // Retorna a skill atualizada
-          return {
-            ...skill,
-            treinada: checked,
-            bonus: totalBonus,
-          };
-        }
-        return skill;
-      });
-
-      // Retorna o personagem com as skills atualizadas
-      return {
-        ...prevCharacter,
-        skills: updatedSkills,
-      };
-    });
-  };
-
-  // const rollSkill = (skill) => {
-  //   const rollResult = Math.floor(Math.random() * 20) + 1;
-  //   alert(
-  //     `Resultado da rolagem para ${skill.name}: ${rollResult + skill.bonus}`
-  //   );
-  // };
-
   const calculateLevelBonus = (level) => {
     let levelBonus = 2;
 
@@ -254,17 +172,91 @@ function App() {
       levelBonus = 5;
     }
 
+    return levelBonus;
+  };
+
+  const calculateSkills = (character) => {
+    const updatedSkills = character.skills.map((skill) => {
+      const trainedBonus = skill.treinada ? 2 + character.levelModifier : 0;
+      const abilityModifier = Math.floor(
+        (character.abilities[skill.mod] - 10) / 2
+      );
+      const totalBonus = abilityModifier + trainedBonus;
+
+      return {
+        ...skill,
+        bonus: totalBonus,
+      };
+    });
+
+    return {
+      ...character,
+      skills: updatedSkills,
+    };
+  };
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+
+    if (name === "generation") {
+      value = Math.max(0, Math.min(4, Number(e.target.value)));
+    } else if (name === "level") {
+      value = Math.max(1, Math.min(20, Number(e.target.value)));
+    }
+    setCharacter({ ...character, [name]: value });
+  };
+
+  const handleAbilityChange = (e) => {
+    const { name, value } = e.target;
+    const updatedCharacter = { ...character };
+    updatedCharacter.abilities[name] = parseInt(value);
+    setCharacter(updatedCharacter);
+  };
+
+  const handleSkillChange = (skillName, checked) => {
     setCharacter((prevCharacter) => {
+      const updatedSkills = prevCharacter.skills.map((skill) => {
+        if (skill.name === skillName) {
+          const trainedBonus = checked ? 2 + prevCharacter.levelModifier : 0;
+          const abilityModifier = Math.floor(
+            (prevCharacter.abilities[skill.mod] - 10) / 2
+          );
+          const totalBonus = abilityModifier + trainedBonus;
+
+          return {
+            ...skill,
+            treinada: checked,
+            bonus: totalBonus,
+          };
+        }
+        return skill;
+      });
+
       return {
         ...prevCharacter,
-        levelModifier: levelBonus,
+        skills: updatedSkills,
       };
     });
   };
 
+  const resetCharacter = () => {
+    setCharacter(defaultCharacter);
+    localStorage.removeItem("character");
+  };
+
   useEffect(() => {
-    calculateLevelBonus(character.level);
-  }, [character.level]);
+    const levelBonus = calculateLevelBonus(character.level);
+    const updatedCharacter = calculateSkills({
+      ...character,
+      levelModifier: levelBonus,
+    });
+    setCharacter(updatedCharacter);
+  }, [character.level, character.abilities, character.skills]);
+
+  const rollDice = (bonus) => {
+    const D20 = Math.floor(Math.random() * 20) + 1; // Gera um número aleatório entre 1 e 20
+    alert(`Dado rolado: ${D20} | Resultado: ${D20 + bonus}`);
+  };
 
   return (
     <div className="App">
@@ -275,12 +267,11 @@ function App() {
           handleChange={handleChange}
           handleAbilityChange={handleAbilityChange}
         />
-        <Skills skills={character.skills} onClick={handleSkillChange} />
-        {/* <Skills
+        <Skills
           skills={character.skills}
-          handleSkillChange={handleSkillChange}
-          rollSkill={rollSkill}
-        /> */}
+          onClick={handleSkillChange}
+          rollDice={rollDice}
+        />
         <button onClick={resetCharacter}>
           Restaurar Padrão e Limpar LocalStorage
         </button>

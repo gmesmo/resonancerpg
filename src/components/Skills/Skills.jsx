@@ -22,6 +22,14 @@ function Skills(props) {
             </td>
             <td className={styles.skillName}>{skill.name}</td>
             <td>Bônus: {skill.bonus}</td>
+            <td>
+              <button
+                className={styles.dice}
+                onClick={() => props.rollDice(skill.bonus)}
+              >
+                20
+              </button>
+            </td>
           </tr>
         ))}
       </table>
