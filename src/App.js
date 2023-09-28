@@ -18,7 +18,12 @@ function App() {
       },
     ],
     ac: 10,
-    ego: 10,
+    ego: [
+      {
+        current: 10,
+        max: 10,
+      },
+    ],
     abilities: {
       strength: 10,
       dexterity: 10,
@@ -216,6 +221,28 @@ function App() {
     setCharacter({ ...character, [name]: value });
   };
 
+  const handleHPEgoChange = (e) => {
+    let { name, value } = e.target;
+
+    if (name === "hp") {
+      value = Math.max(
+        0,
+        Math.min(character.hp[0].max, Number(e.target.value))
+      );
+    } else if (name === "ego") {
+      value = Math.max(
+        0,
+        Math.min(character.ego[0].max, Number(e.target.value))
+      );
+    }
+
+    setCharacter((prevCharacter) => {
+      const updated = prevCharacter.name.map((temp) => {
+        return { ...temp, current: value };
+      });
+    });
+  };
+
   const handleAbilityChange = (e) => {
     const { name, value } = e.target;
     const updatedCharacter = { ...character };
@@ -281,6 +308,7 @@ function App() {
             character={character}
             handleChange={handleChange}
             handleAbilityChange={handleAbilityChange}
+            handleHPEgoChange={handleHPEgoChange}
           />
 
           <Skills

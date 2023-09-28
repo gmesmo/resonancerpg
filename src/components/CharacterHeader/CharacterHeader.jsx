@@ -1,9 +1,14 @@
 import React from "react";
 
 import styles from "./CharacterHeader.module.css";
-import { Body } from "../Icons/Icons";
+import { Body, Ego, Shield } from "../Icons/Icons";
 
-function CharacterHeader({ character, handleChange, handleAbilityChange }) {
+function CharacterHeader({
+  character,
+  handleChange,
+  handleAbilityChange,
+  handleHPEgoChange,
+}) {
   const abilityKeys = Object.keys(character.abilities);
 
   return (
@@ -38,7 +43,33 @@ function CharacterHeader({ character, handleChange, handleAbilityChange }) {
 
       <div className={styles.statusContainer}>
         <h2>Status</h2>
-        <Body size={"80"} />
+        <div className={styles.status}>
+          <div className={styles.hp}>
+            <Body
+              current={character.hp[0].current}
+              max={character.hp[0].max}
+              size={"50"}
+            />
+            <input
+              style={{ width: "50px" }}
+              value={character.hp[0].current}
+            ></input>
+          </div>
+          <div>
+            <Shield size={"50"} />
+            {character.ac}
+          </div>
+          <div>
+            <Ego size={"50"} />
+            <input
+              name="ego"
+              type="number"
+              style={{ width: "50px" }}
+              value={character.ego[0].current}
+              onChange={handleHPEgoChange}
+            ></input>
+          </div>
+        </div>
       </div>
 
       <div className="character-abilities">

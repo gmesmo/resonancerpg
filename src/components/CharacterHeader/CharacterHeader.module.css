@@ -29,8 +29,25 @@
   flex-grow: 50;
 }
 
-.statusContainer {
+.statusContainer .status {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
   width: 90%;
+}
+
+.status div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status input {
+  text-align: center;
+  background-color: transparent;
+  border: solid 1px #000c;
+  border-radius: 8px;
 }
 
 .abilitiesContainer {
