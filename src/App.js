@@ -267,6 +267,7 @@ function App() {
           handleChange={handleChange}
           handleAbilityChange={handleAbilityChange}
         />
+
         <Skills
           skills={character.skills}
           onClick={handleSkillChange}
