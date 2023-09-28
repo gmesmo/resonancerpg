@@ -28,3 +28,26 @@
   display: block;
   flex-grow: 50;
 }
+
+.statusContainer {
+  width: 90%;
+}
+
+.abilitiesContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.abilitiesContainer div {
+  height: 3rem;
+}
+
+.abilitiesContainer label {
+  text-transform: capitalize;
+}
+
+.abilitiesContainer input {
+  width: 85%;
+
+  text-align: center;
+}

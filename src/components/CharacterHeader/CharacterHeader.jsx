@@ -1,8 +1,11 @@
 import React from "react";
 
 import styles from "./CharacterHeader.module.css";
+import { Body } from "../Icons/Icons";
 
 function CharacterHeader({ character, handleChange, handleAbilityChange }) {
+  const abilityKeys = Object.keys(character.abilities);
+
   return (
     <div className={styles.characterHeader}>
       <div className={styles.info}>
@@ -33,50 +36,28 @@ function CharacterHeader({ character, handleChange, handleAbilityChange }) {
         />
       </div>
 
+      <div className={styles.statusContainer}>
+        <h2>Status</h2>
+        <Body size={"80"} />
+      </div>
+
       <div className="character-abilities">
         <h2>Habilidades</h2>
-        <label>Força:</label>
-        <input
-          type="number"
-          name="strength"
-          value={character.abilities.strength}
-          onChange={handleAbilityChange}
-        />
-        <label>Destreza:</label>
-        <input
-          type="number"
-          name="dexterity"
-          value={character.abilities.dexterity}
-          onChange={handleAbilityChange}
-        />
-        <label>Constituição:</label>
-        <input
-          type="number"
-          name="constitution"
-          value={character.abilities.constitution}
-          onChange={handleAbilityChange}
-        />
-        <label>Inteligência:</label>
-        <input
-          type="number"
-          name="intelligence"
-          value={character.abilities.intelligence}
-          onChange={handleAbilityChange}
-        />
-        <label>Sabedoria:</label>
-        <input
-          type="number"
-          name="wisdom"
-          value={character.abilities.wisdom}
-          onChange={handleAbilityChange}
-        />
-        <label>Carisma:</label>
-        <input
-          type="number"
-          name="charisma"
-          value={character.abilities.charisma}
-          onChange={handleAbilityChange}
-        />
+        <div className={styles.abilitiesContainer}>
+          {abilityKeys.map((ability) => {
+            return (
+              <div key={ability}>
+                <label htmlFor={ability}>{ability}</label>
+                <input
+                  type="number"
+                  name={ability}
+                  value={character.abilities[ability]}
+                  onChange={handleAbilityChange}
+                ></input>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

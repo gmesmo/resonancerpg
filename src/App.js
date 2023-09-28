@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import CharacterHeader from "./components/CharacterHeader/CharacterHeader";
 import Skills from "./components/Skills/Skills";
+import { Trash } from "./components/Icons/Icons";
+import isEqual from "lodash/isEqual";
 
 function App() {
   const defaultCharacter = {
@@ -9,6 +11,14 @@ function App() {
     generation: 0,
     level: 1,
     levelModifier: 2,
+    hp: [
+      {
+        current: 5,
+        max: 5,
+      },
+    ],
+    ac: 10,
+    ego: 10,
     abilities: {
       strength: 10,
       dexterity: 10,
@@ -250,7 +260,11 @@ function App() {
       ...character,
       levelModifier: levelBonus,
     });
-    setCharacter(updatedCharacter);
+
+    // Verifique se o personagem atualizado é diferente do personagem existente antes de atualizá-lo
+    if (!isEqual(updatedCharacter, character)) {
+      setCharacter(updatedCharacter);
+    }
   }, [character.level, character.abilities, character.skills]);
 
   const rollDice = (bonus) => {
@@ -259,25 +273,27 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <section id={"sheetHeader"}>
-        <h1>Ficha de Personagem de RPG</h1>
-        <CharacterHeader
-          character={character}
-          handleChange={handleChange}
-          handleAbilityChange={handleAbilityChange}
-        />
+    <>
+      <div className="App">
+        <section id={"sheetHeader"}>
+          <h1>Ficha de Personagem de RPG</h1>
+          <CharacterHeader
+            character={character}
+            handleChange={handleChange}
+            handleAbilityChange={handleAbilityChange}
+          />
 
-        <Skills
-          skills={character.skills}
-          onClick={handleSkillChange}
-          rollDice={rollDice}
-        />
-        <button onClick={resetCharacter}>
-          Restaurar Padrão e Limpar LocalStorage
-        </button>
-      </section>
-    </div>
+          <Skills
+            skills={character.skills}
+            onClick={handleSkillChange}
+            rollDice={rollDice}
+          />
+        </section>
+      </div>
+      <button id="trash" onClick={resetCharacter}>
+        <Trash size="32" />
+      </button>
+    </>
   );
 }
 

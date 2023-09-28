@@ -9,12 +9,20 @@
   align-items: center;
 
   width: 25dvw;
-  height: calc(100dvh - 0.25rem);
-  background-color: lightgray;
+  height: calc(100dvh - 0.25rem - 1.2rem);
+  margin: 0.5rem;
 
   padding-top: 0.25rem;
 
   border-right: solid 2px gray;
+
+  /* From https://css.glass */
+  background: rgba(155, 0, 105, 0.19);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.4px);
+  -webkit-backdrop-filter: blur(5.4px);
+  border: 1px solid rgba(155, 0, 105, 0.6);
 }
 
 .character-header {
@@ -33,4 +41,11 @@
 
 h2 {
   margin-top: 20px;
+}
+
+#trash {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  color: red;
 }
