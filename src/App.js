@@ -339,6 +339,7 @@ function App() {
     const updatedCharacter = calculateSkills({
       ...character,
       levelModifier: levelBonus,
+      ac: 8 + levelBonus,
     });
 
     // Verifique se o personagem atualizado é diferente do personagem existente antes de atualizá-lo
