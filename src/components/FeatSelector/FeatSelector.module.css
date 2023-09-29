@@ -1,0 +1,12 @@
+#FeatSelector {
+  background-color: lightgray;
+
+  width: 300px;
+  max-height: 30dvh;
+
+  margin: 0.5rem;
+
+  /* position: relative;
+  left: -50px;
+  z-index: -1; */
+}

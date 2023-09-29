@@ -1,0 +1,104 @@
+{
+  "Feats": [
+    {
+      "id": 0,
+      "name": "Combatente",
+      "category": "Inicial",
+      "special": "Não possuir outro Talento Inicial",
+      "level": 1,
+      "about": "Você é especializado em combate à curta distância. Traços de Cura, Dano, Resistência, Armadura e Movimentação têm o Custo reduzido em 25% para você, além de que a desvantagem \"Próprio\" restitui pontos adicionais na mesma porcentagem. Você ganha +5 PV por nível além de seu modificador de Constituição e +1 Ego por nível além de seu modificador de Inteligência.",
+      "bonus": [
+        {
+          "hp-level": 5,
+          "ego-level": 1,
+          "trait-discount": [
+            "dano",
+            "cura",
+            "resistencia",
+            "armadura",
+            "movimentacao"
+          ],
+          "trait-disadvantage-discount": ["proprio"],
+          "trait-discount-perc": 25
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Utilitario",
+      "category": "Inicial",
+      "special": "Não possuir outro Talento Inicial",
+      "level": 1,
+      "about": "Você é treinado para ser versátil, por conta disso possui 2 + modificador de inteligência perícias treinadas, alternativamente você pode escolher diminuir 3 perícias do total acima e se tornar Especialista em uma perícia. Adicionalmente o Traço Sentido Apurado têm custo reduzido em 25% para você. Você ganha +4 PV por nível além de seu modificador de Constituição e +2 Ego por nível além de seu modificador de Inteligência.",
+      "bonus": [
+        {
+          "hp-level": 4,
+          "ego-level": 2,
+          "skills-trained-bonus": 4,
+          "trait-discount": ["sentido apurado"],
+          "trait-discount-perc": 25
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Suporte",
+      "category": "Inicial",
+      "special": "Não possuir outro Talento Inicial",
+      "level": 1,
+      "about": "Seu foco é auxiliar seus aliados, por conta disso você tem maior facilidade em poderes que ajudam. Traços de Cura, Fortalecer/Debilitar Recurso, Fortalecer/ Debilitar Habilidade têm Custo reduzido em 25%, a desvantagem Permite Salvamento restitui um número de pontos adicionais na mesma porcentagem. Você ganha +3 PV por nível além de seu modificador de Constituição e +3 Ego por nível além de seu modificador de Inteligência.",
+      "bonus": [
+        {
+          "hp-level": 3,
+          "ego-level": 3,
+          "trait-discount": [
+            "cura",
+            "fortalecer recurso",
+            "debilitar recurso",
+            "fortalecer habilidade",
+            "debilitar habilidade"
+          ],
+          "trait-disadvantage-discount": ["permite salvamento"],
+          "trait-discount-perc": 25
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Evocador",
+      "category": "Inicial",
+      "special": "Não possuir outro Talento Inicial",
+      "level": 1,
+      "about": "Você possui um dom para combate a longas distâncias e destruição do campo de batalha. Traços de Dano, Alcance, Área de Efeito, Duração, Crítico Brutal e Especialização Crítica consomem 25% menos pontos. Você ganha +2 PV por nível além de seu modificador de Constituição e +4 Ego por nível além de seu modificador de Inteligência.",
+      "bonus": [
+        {
+          "hp-level": 2,
+          "ego-level": 4,
+          "trait-discount": [
+            "dano",
+            "alcance",
+            "area",
+            "duracao",
+            "critico brutal",
+            "especializacao critica"
+          ],
+          "trait-discount-perc": 25
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Adaptavel",
+      "category": "Inicial",
+      "special": "Não possuir outro Talento Inicial",
+      "level": 1,
+      "about": "Seus poderes são extremamente versáteis, você compra Traços ao invés de Poderes, a cada Descanso Completo você pode reorganizar seus Traços dentro dos Poderes respectivos ao seu nível para criar sempre um poder diferente. Você ganha +2 PV por nível além de seu modificador de Constituição e +2 Ego por nível além de seu modificador de Inteligência.",
+      "bonus": [
+        {
+          "hp-level": 2,
+          "ego-level": 2
+        }
+      ]
+    }
+  ]
+}

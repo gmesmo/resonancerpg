@@ -4,6 +4,7 @@ import CharacterHeader from "./components/CharacterHeader/CharacterHeader";
 import Skills from "./components/Skills/Skills";
 import { Trash } from "./components/Icons/Icons";
 import isEqual from "lodash/isEqual";
+import FeatSelector from "./components/FeatSelector/FeatSelector";
 
 function App() {
   const defaultCharacter = {
@@ -229,18 +230,26 @@ function App() {
         0,
         Math.min(character.hp[0].max, Number(e.target.value))
       );
+
+      setCharacter((prevCharacter) => {
+        return {
+          ...prevCharacter,
+          hp: [{ ...prevCharacter.hp[0], current: value }],
+        };
+      });
     } else if (name === "ego") {
       value = Math.max(
         0,
         Math.min(character.ego[0].max, Number(e.target.value))
       );
-    }
 
-    setCharacter((prevCharacter) => {
-      const updated = prevCharacter.name.map((temp) => {
-        return { ...temp, current: value };
+      setCharacter((prevCharacter) => {
+        return {
+          ...prevCharacter,
+          ego: [{ ...prevCharacter.ego[0], current: value }],
+        };
       });
-    });
+    }
   };
 
   const handleAbilityChange = (e) => {
@@ -248,6 +257,14 @@ function App() {
     const updatedCharacter = { ...character };
     updatedCharacter.abilities[name] = parseInt(value);
     setCharacter(updatedCharacter);
+
+    if (value % 2 === 0) {
+      updatedCharacter.skills.map((skill) => {
+        if (skill.mod === name) {
+          handleSkillChange(skill.name, skill.treinada);
+        }
+      });
+    }
   };
 
   const handleSkillChange = (skillName, checked) => {
@@ -317,7 +334,9 @@ function App() {
             rollDice={rollDice}
           />
         </section>
+        <FeatSelector character={character} />
       </div>
+
       <button id="trash" onClick={resetCharacter}>
         <Trash size="32" />
       </button>

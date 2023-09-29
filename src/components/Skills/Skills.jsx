@@ -16,7 +16,7 @@ function Skills(props) {
                 <label>
                   <input
                     type="checkbox"
-                    checked={skill.treinada}
+                    checked={skill.treinada || false}
                     onChange={(e) =>
                       props.onClick(skill.name, e.target.checked)
                     }

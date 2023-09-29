@@ -51,8 +51,11 @@ function CharacterHeader({
               size={"50"}
             />
             <input
+              name="hp"
+              type="number"
               style={{ width: "50px" }}
               value={character.hp[0].current}
+              onChange={handleHPEgoChange}
             ></input>
           </div>
           <div>

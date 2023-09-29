@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 const Trash = (props) => {
   const size = props.size;
 
@@ -34,14 +36,51 @@ const Trash = (props) => {
 };
 
 const Body = ({ current, max, size }) => {
-  let percentHP = 100;
-  if (current !== 0 && max !== 0) {
-    percentHP = (current * 100) / max;
-  }
+  // Estado local para a porcentagem
+  const [percentHP, setPercentHP] = useState(100);
+
+  // Atualiza a porcentagem sempre que current ou max mudar
+  useEffect(() => {
+    const newPercentHP = (current * 100) / max;
+
+    // Verifica se o valor aumentou ou diminuiu em relação ao percentHP atual
+    if (newPercentHP !== percentHP) {
+      animatePercent(newPercentHP);
+    }
+  }, [current, max]);
+
+  // Função para animar o offset suavemente até o valor atual
+  const animatePercent = (targetPercent) => {
+    const duration = 150; // Duração da animação em milissegundos
+    const startPercent = percentHP;
+
+    const startTime = Date.now();
+
+    const updatePercent = () => {
+      const currentTime = Date.now();
+      const elapsedTime = currentTime - startTime;
+
+      if (elapsedTime < duration) {
+        const newPercent =
+          startPercent +
+          (targetPercent - startPercent) * (elapsedTime / duration);
+        setPercentHP(newPercent);
+        requestAnimationFrame(updatePercent);
+      } else {
+        setPercentHP(targetPercent); // Define o valor final quando a animação estiver concluída
+      }
+    };
+
+    requestAnimationFrame(updatePercent);
+  };
 
   return (
     <div
-      style={{ position: "relative", width: `${size}px`, height: `${size}px` }}
+      style={{
+        position: "relative",
+        width: `${size}px`,
+        height: `${size}px`,
+      }}
     >
       <svg
         viewBox="0 0 16 16"
@@ -62,6 +101,7 @@ const Body = ({ current, max, size }) => {
         <path
           d="M4.243 4.757a3.757 3.757 0 115.851 3.119 6.006 6.006 0 013.9 5.339.75.75 0 01-.715.784H2.721a.75.75 0 01-.714-.784 6.006 6.006 0 013.9-5.34 3.753 3.753 0 01-1.664-3.118z"
           fill="url(#gradient)"
+          style={{ transition: "fill 0.5s" }}
         ></path>
       </svg>
     </div>
