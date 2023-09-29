@@ -14,10 +14,11 @@ function CharacterHeader({
   return (
     <div className={styles.characterHeader}>
       <div className={styles.info}>
-        <label>Nome do Personagem:</label>
         <input
+          className={styles.name}
           type="text"
           name="name"
+          placeholder="Nome do personagem"
           value={character.name}
           onChange={handleChange}
         />
@@ -45,6 +46,7 @@ function CharacterHeader({
         <h2>Status</h2>
         <div className={styles.status}>
           <div className={styles.hp}>
+            <label htmlFor="hp">HP</label>
             <Body
               current={character.hp[0].current}
               max={character.hp[0].max}
@@ -59,11 +61,17 @@ function CharacterHeader({
             ></input>
           </div>
           <div>
+            <label htmlFor="AC">AC</label>
             <Shield size={"50"} />
             {character.ac}
           </div>
           <div>
-            <Ego size={"50"} />
+            <label htmlFor="ego">Ego</label>
+            <Ego
+              current={character.ego[0].current}
+              max={character.ego[0].max}
+              size={"50"}
+            />
             <input
               name="ego"
               type="number"

@@ -5,8 +5,44 @@ import Skills from "./components/Skills/Skills";
 import { Trash } from "./components/Icons/Icons";
 import isEqual from "lodash/isEqual";
 import FeatSelector from "./components/FeatSelector/FeatSelector";
+import Background from "./components/Background/Background";
+
+function generateShapes() {
+  // Lógica para gerar as formas aqui
+  const shapes = [
+    {
+      color: "purple",
+      shapeProps: generateShapeProps(1),
+    },
+    {
+      color: "green",
+      shapeProps: generateShapeProps(2),
+    },
+    {
+      color: "blue",
+      shapeProps: generateShapeProps(3),
+    },
+  ];
+  return shapes;
+}
+
+function generateShapeProps(shape) {
+  return {
+    size: 250 * shape,
+    growth: Math.floor(Math.random() * 5) + 1,
+    edges: Math.floor(Math.random() * 10) + 3,
+  };
+}
 
 function App() {
+  const [shapes, setShapes] = useState([]);
+
+  useEffect(() => {
+    // Gere as formas apenas uma vez quando o componente for montado
+    const generatedShapes = generateShapes();
+    setShapes(generatedShapes);
+  }, []);
+
   const defaultCharacter = {
     name: "",
     generation: 0,
@@ -318,9 +354,9 @@ function App() {
 
   return (
     <>
+      {/* <Background shapes={shapes} /> */}
       <div className="App">
         <section id={"sheetHeader"}>
-          <h1>Ficha de Personagem de RPG</h1>
           <CharacterHeader
             character={character}
             handleChange={handleChange}
