@@ -144,7 +144,7 @@ const Shield = ({ size }) => {
 
 const Ego = ({ current, max, size }) => {
   // Calcular a porcentagem atual
-  const percentEgo = (current / max) * 100;
+  const percentEgo = (current * 100) / max;
 
   return (
     <div
