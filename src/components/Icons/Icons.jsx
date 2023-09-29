@@ -179,8 +179,8 @@ const Ego = ({ current, max, size }) => {
         style={{
           position: "absolute",
           top: "0",
-          zIndex: "-1",
           left: "0",
+          zIndex: "-1",
           width: "100%",
           height: "100%",
           clipPath: `inset(${100 - percentEgo}% 0 0 0)`,
