@@ -1,4 +1,6 @@
 .App {
+  position: relative;
+
   display: flex;
 
   flex-direction: row;
@@ -8,13 +10,13 @@
 }
 
 #sheetHeader {
+  position: absolute;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 
   width: 25dvw;
-  max-width: 380px;
-  min-width: 325px;
   height: calc(100dvh - 0.25rem - 2px);
 
   padding-top: 0.25rem;
@@ -25,6 +27,12 @@
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(0, 0, 0, 0.25);
+
+  transition: all 0.5s;
+}
+
+#sheetHeader.closed {
+  transform: translate(-100%, 0%);
 }
 
 .character-header {
@@ -50,4 +58,9 @@ h2 {
   right: 1.5rem;
   bottom: 1.5rem;
   color: red;
+}
+
+.buttonsSpacing {
+  width: 5rem;
+  height: 100dvh;
 }

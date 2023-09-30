@@ -7,6 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   max-height: 100dvh;
+
+  background-image: url(https://picsum.photos/1920/1080);
 }
 
 code {

@@ -6,6 +6,7 @@ import { Trash } from "./components/Icons/Icons";
 import isEqual from "lodash/isEqual";
 import FeatSelector from "./components/FeatSelector/FeatSelector";
 import Background from "./components/Background/Background";
+import Button from "./components/Button/Button";
 
 function generateShapes() {
   // Lógica para gerar as formas aqui
@@ -205,6 +206,8 @@ function App() {
     ],
   };
 
+  const [menuButton, setMenuButton] = useState(false);
+
   const [character, setCharacter] = useState(
     JSON.parse(localStorage.getItem("character")) || defaultCharacter
   );
@@ -357,7 +360,12 @@ function App() {
     <>
       {/* <Background shapes={shapes} /> */}
       <div className="App">
-        <section id={"sheetHeader"}>
+        <Button onClick={() => setMenuButton(!menuButton)} value={menuButton} />
+        <section className="buttonsSpacing"></section>
+        <section
+          id={"sheetHeader"}
+          className={`${menuButton ? "open" : "closed"}`}
+        >
           <CharacterHeader
             character={character}
             handleChange={handleChange}

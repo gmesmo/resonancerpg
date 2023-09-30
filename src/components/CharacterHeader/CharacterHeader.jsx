@@ -24,7 +24,7 @@ function CharacterHeader({
         />
       </div>
       <div className={styles.info}>
-        <label>Geração:</label>
+        <label>Geração: </label>
         <input
           type="number"
           name="generation"

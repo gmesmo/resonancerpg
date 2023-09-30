@@ -21,7 +21,7 @@ tr {
   justify-content: space-between;
 
   text-align: center;
-  width: 100%;
+  width: 80%;
 
   margin-bottom: 0.5rem;
 
@@ -29,10 +29,9 @@ tr {
 }
 
 .info .name {
-  margin: 0 auto;
   width: 100%;
   max-width: unset;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   border-radius: 50px;
 }
 
@@ -42,7 +41,7 @@ tr {
 
   background-color: transparent;
   border: solid 1px white;
-  border-radius: 8px;
+  border-radius: 15px;
 
   color: white;
 }
@@ -50,7 +49,7 @@ tr {
 .info label {
   color: white;
   display: block;
-  flex-grow: 50;
+  flex-grow: 30;
 }
 
 .statusContainer .status {

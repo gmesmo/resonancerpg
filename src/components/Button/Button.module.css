@@ -1,0 +1,33 @@
+.Button {
+  position: absolute;
+  left: 1rem;
+  top: 0.8rem;
+  /* transform: translate(420%, 20%); */
+
+  background-color: gray;
+  color: white;
+
+  font-size: 2rem;
+
+  height: 3rem;
+  width: 3rem;
+
+  border-radius: 30px;
+  border: none;
+
+  aspect-ratio: 1;
+
+  transition: all 0.5s;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.Button.open {
+  transform: rotate(-45deg);
+
+  left: 21.5dvw;
+  z-index: 5;
+  background-color: transparent;
+}
