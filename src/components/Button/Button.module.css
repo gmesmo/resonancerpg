@@ -30,4 +30,12 @@
   left: 21.5dvw;
   z-index: 5;
   background-color: transparent;
+
+  border: solid 1px rgba(128, 128, 128, 0.473);
+}
+
+@media screen and (max-width: 1367px) {
+  .Button.open {
+    left: 20.5dvw;
+  }
 }
