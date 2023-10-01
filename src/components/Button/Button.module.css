@@ -2,6 +2,8 @@
   position: absolute;
   left: 1rem;
   top: 0.8rem;
+
+  z-index: 5;
   /* transform: translate(420%, 20%); */
 
   background-color: gray;
@@ -13,7 +15,7 @@
   width: 3rem;
 
   border-radius: 30px;
-  border: none;
+  border: solid 1px rgba(128, 128, 128, 0.473);
 
   aspect-ratio: 1;
 
@@ -28,10 +30,8 @@
   transform: rotate(-45deg);
 
   left: 21.5dvw;
-  z-index: 5;
-  background-color: transparent;
 
-  border: solid 1px rgba(128, 128, 128, 0.473);
+  background-color: transparent;
 }
 
 @media screen and (max-width: 1367px) {
